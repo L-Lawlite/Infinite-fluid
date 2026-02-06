@@ -1,4 +1,4 @@
-package com.example.exampleplugin;
+package net.lawliet.infinitefluidplugin;
 
 import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.server.core.Message;
