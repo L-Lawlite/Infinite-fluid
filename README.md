@@ -1,16 +1,20 @@
-# Hytale Plugin Template
+Allows infinite fluid source like minecraft.
 
-A template for Hytale java plugins. Created by [Up](https://github.com/UpcraftLP), and slightly modified by Kaupenjoe. 
+By default, only water is configured, but all the hytale and modded fluid can be configured if they follow vanilla hytale naming convention.
 
-### Configuring the Template
-If you for example installed the game in a non-standard location, you will need to tell the project about that.
-The recommended way is to create a file at `%USERPROFILE%/.gradle/gradle.properties` to set these properties globally.
 
-```properties
-# Set a custom game install location
-hytale.install_dir=path/to/Hytale
-
-# Speed up the decompilation process significantly, by only including the core hytale packages.
-# Recommended if decompiling the game takes a very long time on your PC.
-hytale.decompile_partial=true
+### Configuration option
+Example, if you want to add lava act like infinite source like minecraft gamerule for infinite lava do 
+```json
+{
+  "Fluids": {
+    "Water": {
+      "Enabled": true
+    },
+    "Lava": {
+      "Enabled": true
+    }
+  }
+}
 ```
+you can also disable the default infinite water by changing `Enabled` to `false`
