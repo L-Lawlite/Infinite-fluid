@@ -26,7 +26,7 @@ public class InfiniteFluidConfig {
     }
 
     public FluidConfig getFluidConfig(String key) {
-        return this.fluids.computeIfAbsent(key, _ -> new FluidConfig());
+        return this.fluids.getOrDefault(key,null);
     }
 
     public Map<String, FluidConfig> getFluids() {

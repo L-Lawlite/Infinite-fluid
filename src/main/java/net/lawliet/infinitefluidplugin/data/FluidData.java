@@ -9,7 +9,7 @@ public class FluidData {
     public byte sourceLevel;
     public int sourceId;
     public int flowingId;
-    private boolean isValid;
+    private final boolean isValid;
 
     public FluidData(String sourceKey, String flowingKey) {
         this.sourceKey = sourceKey;
@@ -22,6 +22,7 @@ public class FluidData {
             return;
         }
         Fluid source = fluidMap.getAsset(sourceId);
+        isValid = true;
         this.sourceLevel =  source != null ? (byte) source.getMaxFluidLevel() : 0;
     }
 

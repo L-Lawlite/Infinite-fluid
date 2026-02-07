@@ -40,6 +40,7 @@ public class InfiniteFluidSystem extends EntityTickingSystem<ChunkStore> {
     private static final int[][] OFFSET = new int[][]{{-1,0},{1,0},{0,-1},{0,1}};
 
     private static Config<InfiniteFluidConfig> fluidConfig;
+    private static final Map<String, Fluid> fluids = getAllFluidKeys();
 
     public InfiniteFluidSystem(Config<InfiniteFluidConfig> config) {
         fluidConfig = config;
@@ -51,12 +52,11 @@ public class InfiniteFluidSystem extends EntityTickingSystem<ChunkStore> {
         if (fluidSection == null || fluidSection.isEmpty()) return;
         BlockSection blockSection = archetypeChunk.getComponent(i, BlockSection.getComponentType());
         if(blockSection == null || blockSection.getTickingBlocksCount() == 0) return;
-        // config setup
-        getAllFluidKeys().forEach((k, _) -> {
+        InfiniteFluidSystem.fluids.forEach((k, _) -> {
             if (!k.endsWith("_Source")) return;
             String fluidName = StringUtil.removeSuffixIfExists(k, "_Source");
-            FluidConfig currentFluidConfig = fluidConfig.get().getFluidConfig(fluidName);
-            if (!currentFluidConfig.isEnabled()) return;
+            FluidConfig currentFluidConfig = InfiniteFluidSystem.fluidConfig.get().getFluidConfig(fluidName);
+            if (currentFluidConfig == null || !currentFluidConfig.isEnabled()) return;
             Optional<FluidData> fluidData = initFluidData(fluidName);
             if (fluidData.isEmpty()) return;
             FluidTicker.CachedAccessor accessor = FluidTicker.CachedAccessor.of(commandBuffer, fluidSection, blockSection, 1);
@@ -132,8 +132,8 @@ public class InfiniteFluidSystem extends EntityTickingSystem<ChunkStore> {
         return QUERY;
     }
 
-
-    public static Set<Dependency<ChunkStore>> getDEPENDENCIES() {
+    @Override
+    public @NotNull Set<Dependency<ChunkStore>> getDependencies() {
         return DEPENDENCIES;
     }
 }
